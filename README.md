@@ -2,6 +2,7 @@
 
 This project has the scripts and notebook/markdown report files to run particle simulations using two hindcast versions of the Cook Inlet Operational Forecast System (CIOFS) ROMS model. The plots and pages from this project are in the report located at [ciofs-fresh.axds.co](https://ciofs-fresh.axds.co).
 
+Note that I used git-lfs to track larger files.
 
 ## Initial steps
 
