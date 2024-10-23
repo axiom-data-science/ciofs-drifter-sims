@@ -1,0 +1,37 @@
+name: ciofs-drifter-sims
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  # Required for full project functionality (dont remove)
+  - pytest
+  # Examples (remove and add as needed)
+  # - aiohttp
+  # - appdirs
+  # - cartopy
+  # - cf_pandas
+  # - cf_xarray
+  # - cmocean
+  # - geoviews
+  # - h5netcdf
+  # - hvplot
+  # - jupyter
+  # - jupyter_bokeh
+  # - matplotlib-base
+  - alphashape
+  - fastparquet
+  - jupytext
+  - kerchunk
+  - nodejs>=20,<21
+  - numpy
+  # - openpyxl
+  - pandas
+  - particle-tracking-manager
+  - pip
+  # - pyproj
+  # - requests
+  - pip:
+    - mystmd
+    - geopy
+    - git+https://github.com/intake/intake.git
+    - git+https://github.com/axiom-data-science/cook-inlet-catalogs.git

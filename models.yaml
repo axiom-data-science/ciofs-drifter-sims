@@ -1,0 +1,24 @@
+aliases:
+  ciofs_hindcast: ciofs_hindcast
+data:
+  1ab6285d784ff4e2:
+    datatype: intake.readers.datatypes:HDF5
+    kwargs:
+      path: ''
+      storage_options: null
+      url: /mnt/vault/ciofs/HINDCAST/ciofs_kerchunk.parq
+    metadata: {}
+    user_parameters: {}
+entries:
+  ciofs_hindcast:
+    kwargs:
+      chunks: {}
+      data: '{data(1ab6285d784ff4e2)}'
+      engine: kerchunk
+    metadata: {}
+    output_instance: xarray:Dataset
+    reader: intake.readers.readers:XArrayDatasetReader
+    user_parameters: {}
+metadata: {}
+user_parameters: {}
+version: 2
