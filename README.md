@@ -1,8 +1,9 @@
 # Drifter simulations run in two CIOFS hindcast simulations
 
-This project has the scripts and notebook/markdown report files to run particle simulations using two hindcast versions of the Cook Inlet Operational Forecast System (CIOFS) ROMS model. The plots and pages from this project are in the report located at [ciofs-fresh.axds.co](https://ciofs-fresh.axds.co).
+This project has the scripts and notebook/markdown report files to run particle simulations using two hindcast versions of the Cook Inlet Operational Forecast System (CIOFS) ROMS model. The plots and pages from this project are in the report located at [ciofs-fresh.axds.co](https://ciofs-fresh.axds.co). The report repository is at https://github.com/axiom-data-science/ciofs-freshwater-report.
 
-Note that I used git-lfs to track larger files.
+Note that I used git-lfs to track larger files. Look at .gitattributes to see git lfs files.
+
 
 ## Initial steps
 
@@ -36,4 +37,4 @@ The overview pages was made manually as a notebook, then converted to a Myst mar
 
 ## Now what?
 
-Once these steps are complete, complete the other parts of the report. Then compile the Jupyter book report.
+Once these steps are complete, complete the other parts of the report. Then compile the Jupyter book report.  The report repository is at https://github.com/axiom-data-science/ciofs-freshwater-report.
