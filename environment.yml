@@ -6,32 +6,18 @@ dependencies:
   # Required for full project functionality (dont remove)
   - pytest
   # Examples (remove and add as needed)
-  # - aiohttp
-  # - appdirs
-  # - cartopy
-  # - cf_pandas
-  # - cf_xarray
-  # - cmocean
-  # - geoviews
-  # - h5netcdf
-  # - hvplot
-  # - jupyter
-  # - jupyter_bokeh
-  # - matplotlib-base
-  - alphashape
-  - fastparquet
-  - jupytext
-  - kerchunk
+  - alphashape=1.3.1
+  - fastparquet=2024.2.0
+  - intake=2.0.7
+  - jupytext=1.16.4
+  - kerchunk=0.2.5
   - nodejs>=20,<21
-  - numpy
-  # - openpyxl
-  - pandas
-  - particle-tracking-manager
+  - numpy=1.26.4
+  - pandas=2.2.2
+  - particle-tracking-manager=0.9.1
   - pip
-  # - pyproj
-  # - requests
   - pip:
-    - mystmd
-    - geopy
-    - git+https://github.com/intake/intake.git
+    - mystmd==1.3.4
+    - geopy==2.4.1
+    # - git+https://github.com/intake/intake.git
     - git+https://github.com/axiom-data-science/cook-inlet-catalogs.git
