@@ -39,9 +39,8 @@ def calc_total_distance(df):
     
     # Sum the distances to calculate the total distance traveled
     total_distance = np.sum(distances)
-    df["dist_along [km]"] = np.nan
-    
-    
+    df.loc[:,"dist_along [km]"] = np.nan
+
     # if len(distances) == 0:
     #     return df["dist_along [km]"]
     
@@ -253,12 +252,10 @@ def calc_ss(df, o):
     # first align the drifter and model time steps
     # model times: pd.date_range(o.start_time.isoformat(), o.end_time.isoformat(), periods=o.steps_output)
     # model positions: o.history["lon"].data, o.history["lat"].data
-    # times = pd.date_range(df.cf["T"][0], df.cf["T"].iloc[-1], freq="1H")
-    lons, lats = o.history["lon"].data, o.history["lat"].data
+    lons, lats = o.result["lon"].values, o.result["lat"].values
     # have to add 40min to start_time due to the range of times I am using!
     # in order to align with the in situ drifter times
-    model_times = pd.date_range((o.start_time+pd.Timedelta("40T")).isoformat(), o.end_time.isoformat(), periods=o.steps_output)
-
+    model_times = pd.DatetimeIndex([pd.Timestamp(t) for t in o.result.time.values])
     # make a Dataset out of model output to track times correctly
     ds = xr.Dataset({"time": model_times, 
                      "longitude": (["time","drifters"], lons.T), 

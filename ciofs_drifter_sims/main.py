@@ -19,12 +19,18 @@ from utils import add_drifter_track_to_plot, add_feature_to_plot, calc_distance_
 from cartopy.feature import ShapelyFeature
 from shapely.geometry import Polygon, Point, LineString
 
+years = [1999, 2000, 2001, 2006, 2007, 2008, 2009, 2010, 2014, 2015, 2016, 
+         2017, 2018, 2019, 2020]
+
 
 # cat_models = intake.open_catalog("models.yaml")
 # models = ["CIOFSFRESH"]
-models = ["CIOFS"]
+models = ["CIOFS3"]
+# models = ["CIOFS"]
+# drifter_slugs = ["drifters_epscor"]
 # drifter_slugs = ["drifters_ecofoci"]
-drifter_slugs = ["drifters_uaf"]
+drifter_slugs = ["drifters_lake_clark"]
+# drifter_slugs = ["drifters_uaf"]
 # drifter_slugs = ["drifters_ecofoci", "drifters_uaf"]
 
 col_max = "#8e44ad"
@@ -108,8 +114,8 @@ for model in models:
                 yearmin, yearmax = df.cf["T"].min().year, df.cf["T"].max().year
             elif isinstance(df, pd.DataFrame):
                 yearmin, yearmax = pd.Timestamp(df.cf["T"].iloc[0]).year, pd.Timestamp(df.cf["T"].iloc[-1]).year
-            
-            if yearmin not in [2003, 2004, 2005, 2006, 2012, 2013, 2014] and yearmax not in [2003, 2004, 2005, 2006, 2012, 2013, 2014]:
+
+            if yearmin not in years or yearmax not in years:
                 print(f"\nDrifter {dataset_id} is not in the correct year range; year is {yearmin}\n")
                 continue
             
@@ -161,7 +167,8 @@ for model in models:
                                     start_time_end=pd.Timestamp(df.cf["T"].iloc[istart]),
                                     #    start_time=df.cf["T"][0], end_time=df.cf["T"][0]+pd.Timedelta("2H"),#df.cf["T"].iloc[-1],
                                     # #    start_time_end=df.cf["T"][0]+pd.Timedelta("40T"),
-                                    ocean_model_local=True, do3D=False,
+                                    ocean_model_local=False, # for CIOFS3
+                                    do3D=False,
                                     radius=500, number=1000, use_static_masks=use_static_masks,
                                     output_file=f"{basedir}/{filename}.nc")
                 m.run_all()
