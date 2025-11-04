@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.4
+    jupytext_version: 1.17.2
 ---
 
 # Drifters (UAF)
@@ -13,7 +13,7 @@ Drifters run by Mark Johnson and others out of UAF with various years and drogue
         
 * 2003: 7.5m (Cook Inlet)
 * 2004: 5m (Cook Inlet)
-* 2005: 5m, 80m (Cook Inlet)
+* 2005: 5m (Cook Inlet)
 * 2006: 5m (Cook Inlet)
 * 2012: 1m (Cook Inlet), 15m (Cook Inlet)
 * 2013: 1m (Cook Inlet), 15m (Cook Inlet)

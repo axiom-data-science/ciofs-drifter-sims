@@ -33,22 +33,30 @@ def calc_total_distance(df):
     distances = np.array([geodesic((df.cf["latitude"].iloc[i], df.cf["longitude"].iloc[i]), 
                           (df.cf["latitude"].iloc[i+1], df.cf["longitude"].iloc[i+1])).kilometers
                  for i in range(len(df)-1)])
+    # import pdb; pdb.set_trace()
 
     # nan out any zeros since this is used to divide
     distances[distances == 0] = np.nan
     
-    # Sum the distances to calculate the total distance traveled
-    total_distance = np.sum(distances)
-    df.loc[:,"dist_along [km]"] = np.nan
+    distances = np.insert(distances, 0, 0)  # insert a 0 at the beginning for the first point
+    
+    return distances
+    
+    # # Sum the distances to calculate the total distance traveled
+    # total_distance = np.sum(distances)
+    # df["dist_along [km]"] = np.nan
+    # # df.loc[:,"dist_along [km]"] = np.nan
 
-    # if len(distances) == 0:
-    #     return df["dist_along [km]"]
+    # # if len(distances) == 0:
+    # #     return df["dist_along [km]"]
     
-    # else:
-    df["dist_along [km]"].iloc[1:] = distances
-    df["dist_along [km]"].iloc[0] = 0
-    
-    return df["dist_along [km]"]#, total_distance
+    # # else:
+    # df["dist_along [km]"].iloc[1:] = distances
+    # df["dist_along [km]"].iloc[0] = 0
+    # # df.iloc[1:]["dist_along [km]"] = distances
+    # # df.iloc[0]["dist_along [km]"] = 0
+
+    # return df["dist_along [km]"]#, total_distance
 
 
 def calc_qhull(lons, lats) -> shapely.geometry.Polygon:
@@ -229,11 +237,11 @@ def calc_separation_distance(df_interpolated, ds):
     num = ds["d"].sum(dim="time")
     # num = ds["d"].sum()
     denom = np.nansum([df_interpolated["dist_along [km]"].iloc[i]*(P-i) for i in range(P)])
-    if denom == 0:
-        import pdb; pdb.set_trace()
-    # if (num/denom).isnull().any():# or denom.isnull.all():
+    # if denom == 0:
     #     import pdb; pdb.set_trace()
-    # num/denom is getting smaller each time step from beginning
+    # # if (num/denom).isnull().any():# or denom.isnull.all():
+    # #     import pdb; pdb.set_trace()
+    # # num/denom is getting smaller each time step from beginning
     return num/denom
     
 
@@ -266,7 +274,13 @@ def calc_ss(df, o):
                      "separation_distance": (["time","drifters"], np.zeros(lats.T.shape)*np.nan),
                      })
 
-    df.cf["T"] = pd.to_datetime(df.cf["T"])
+    try:
+        df.cf["T"] = pd.to_datetime(df.cf["T"])
+    except ValueError:
+        # for lake clark drifters
+        # import pdb; pdb.set_trace()
+        df.cf["T"] = pd.to_datetime(df.cf["T"], dayfirst=True, format='mixed')
+        # df.cf["T"] = pd.to_datetime(df.cf["T"], format="%d-%b-%Y %H:%M:%S")
 
     # Ensure there are no duplicate labels in the index
     df = df.drop_duplicates(subset=[df.cf["T"].name])
@@ -275,12 +289,22 @@ def calc_ss(df, o):
 
     # Interpolate the DataFrame to the model times
     # all_times = model_times.union([pd.Timestamp(t) for t in df.cf["T"]]).sort_values()
+    # don't want the model time to be outside the drifter time range bc then get a
+    # nan in df_interpolated that propagates. So, leave off initial model times before drifter
+    # start time
+    model_times = model_times[model_times >= df.cf["T"].min()]
+
     all_times = model_times.union(df.cf["T"])
 
     all_times = all_times.drop_duplicates()#subset=[df.cf["T"].name])
 
     # Set the index, reindex, and interpolate
     df_interpolated = df.set_index(df.cf["T"].name, drop=True).reindex(all_times).interpolate().reindex(model_times)#.dropna(subset=df.cf["longitude"].name)
+    
+    # # if initial model time is before initial drifter time, need to back fill to
+    # # avoid nans in the next calculation
+    # if df_interpolated.longitude.isnull().iloc[0]:
+    #     df_interpolated = df_interpolated.bfill()
 
     # then loop over the simulation time steps and for each time step calculate 
     # the distance between the drifter position and the Qhull of the simulated drifter position envelope at that time
@@ -295,18 +319,24 @@ def calc_ss(df, o):
     
     # dfsep = pd.DataFrame(index=model_times, columns=["d", "l"])
     # import pdb; pdb.set_trace()
-    df_interpolated["dist_along [km]"] = calc_total_distance(df_interpolated.dropna(subset=df.cf["longitude"].name))
+    df_interpolated["dist_along [km]"] = calc_total_distance(df_interpolated.dropna(subset=df.cf["longitude"].name).copy())
     
     # for time in df_interpolated.index:
-    for i, time in enumerate(ds.time):
+    for i, time in enumerate(model_times):
         # import pdb; pdb.set_trace()
-        time = time.values
+        # time = time.values
         # print(time)
+        
+        if ds.longitude.sel(time=time).notnull().sum() <= 2 or ds.latitude.sel(time=time).notnull().sum() <= 2:
+            continue
         
         # Filter out NaN values
         valid_indices = ds.longitude.sel(time=time).notnull() & ds.latitude.sel(time=time).notnull()
-        qhull = calc_qhull(ds.longitude.sel(time=time)[valid_indices], ds.latitude.sel(time=time)[valid_indices])
-        
+        try:
+            qhull = calc_qhull(ds.longitude.sel(time=time)[valid_indices], ds.latitude.sel(time=time)[valid_indices])
+        except:
+            import pdb; pdb.set_trace()
+                
         # this qhull is valid at a specific time. Find the corresponding time
         # in df_interpolated to send that row into the function.
         londf = df_interpolated.cf["longitude"].loc[time]
@@ -328,8 +358,10 @@ def calc_ss(df, o):
 
         # df_interpolated.loc[time, "separation_distance"] = calc_separation_distance(ds.sel(time=time), df_interpolated.loc[time])
         
-        if time == ds.time[0] or (np.isnan(df_interpolated.cf["longitude"].loc[ds.time[i-1].values]) \
-                                  and np.isnan(df_interpolated.cf["latitude"].loc[ds.time[i-1].values])):
+        if time == model_times[0] or (np.isnan(df_interpolated.cf["longitude"].loc[model_times[i-1]]) \
+                                  and np.isnan(df_interpolated.cf["latitude"].loc[model_times[i-1]])):
+        # if time == ds.time[0] or (np.isnan(df_interpolated.cf["longitude"].loc[ds.time[i-1].values]) \
+        #                           and np.isnan(df_interpolated.cf["latitude"].loc[ds.time[i-1].values])):
             ds["d"].loc[dict(time=time)] = 0
             ds["separation_distance"].loc[dict(time=time)] = 0
             # df_interpolated.loc[time, "d"] = 0

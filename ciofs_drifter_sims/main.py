@@ -19,19 +19,115 @@ from utils import add_drifter_track_to_plot, add_feature_to_plot, calc_distance_
 from cartopy.feature import ShapelyFeature
 from shapely.geometry import Polygon, Point, LineString
 
-years = [1999, 2000, 2001, 2006, 2007, 2008, 2009, 2010, 2014, 2015, 2016, 
-         2017, 2018, 2019, 2020]
+# years = [2002, 2003, 2004]  # v4a DONE
+# years = [2011, 2012]  # v4b DONE
+# years = [2021, 2022, 2023]  # v4c DONE  
+# years = [1999, 2000, 2001]  # v4d DONE RERUN
+# years = [2006, 2007, 2008]  # v4e DONE
+# years = [2009, 2010]  # v4f DONE
+# years = [2014, 2015, 2016]  # v4g DONE
+# years = [2017, 2018]  # v4h DONE
+# years = [2019, 2020]  # v4i DONE
+# years = [2005, 2013, 2024]  # v4j 
+# years = [1999, 2000, 2001, 2002, 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 
+#          2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]  # v4
+
+
+
+years = [1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 
+         2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+
+
+
+# years = [1999]  # DONE ECOFOCI, DONE UAF
+# years = [2000]  # DONE ECOFOCI, DONE UAF
+# years = [2001]  # DONE ECOFOCI, DONE UAF
+# years = [2002]  # DONE ECOFOCI, DONE UAF
+# years = [2003]  # DONE ECOFOCI, DONE UAF
+# years = [2004]  # DONE ECOFOCI, DONE UAF
+# years = [2005]  # DONE ECOFOCI, DONE UAF
+# years = [2006]  # DONE ECOFOCI, DONE UAF
+
+# years = [2007]  # DONE ECOFOCI, DONE UAF
+# years = [2008]  # DONE ECOFOCI, DONE UAF
+# years = [2009]  # DONE ECOFOCI, DONE UAF
+# years = [2010]  # DONE ECOFOCI, DONE UAF
+# years = [2011]  # DONE ECOFOCI, DONE UAF
+# years = [2012]  # DONE ECOFOCI, DONE UAF
+# years = [2013]  # DONE ECOFOCI, DONE UAF
+# years = [2014]  # DONE ECOFOCI, DONE UAF
+
+# years = [2015]  # DONE ECOFOCI, DONE UAF
+# years = [2016]  # DONE ECOFOCI, DONE UAF
+# years = [2017]  # DONE ECOFOCI, DONE UAF
+# years = [2018]  # DONE ECOFOCI, DONE UAF
+# years = [2019]  # DONE ECOFOCI, DONE UAF
+# years = [2020]  # DONE ECOFOCI, DONE UAF
+# years = [2021]  # DONE ECOFOCI, DONE UAF
+# years = [2022]  # DONE ECOFOCI, DONE UAF
+
+# years = [2023]  # DONE ECOFOCI, DDNE UAF
+# years = [2024]  # DONE ECOFOCI, DONE UAF
+
 
 
 # cat_models = intake.open_catalog("models.yaml")
 # models = ["CIOFSFRESH"]
 models = ["CIOFS3"]
+# years left: 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+# 57887_y2005 spans 2005 and 2006
+# run by ranges instead
+# dids = 5
+# icount = 0  # DONE 
+# icount = 1  # DONE 
+# icount = 2  # DONE
+# icount = 3  # DONE
+# icount = 4  # DONE
+# icount = 5  # DONE
+# icount = 6  # DONE
+# icount = 7  # DONE
+# icount = 74  # DONE
+# icount = 75  # DONE
+# icount = 76  # DONE
+# icount = 77  # DONE
+# icount = 78  # DONE
+
+# drifter_slugs = ["drifters_ecofoci"]  
+
+
+# dids = 19
+# # icount = 4  # running (2)
+# # icount = 5  # DONE (3)
+# # icount = 6  # DONE (4)
+# icount = 7  # DONE (5)
+
+dids = 5
+icount = 18  
+# icount = 19  # DONE
+# icount = 20  # DONE
+# icount = 21  # DONE
+# icount = 22  # DONE
+# icount = 23  # DONE
+# icount = 24  # DONE
+
+drifter_slugs = ["drifters_uaf"]  # 154
+# drifter_slugs = ["drifters_epscor", "drifters_lake_clark"]
+
+# drifter_slugs = ["drifters_ecofoci"]
+# drifter_slugs = ["drifters_uaf", "drifters_epscor", "drifters_lake_clark"]
+
 # models = ["CIOFS"]
 # drifter_slugs = ["drifters_epscor"]
-# drifter_slugs = ["drifters_ecofoci"]
-drifter_slugs = ["drifters_lake_clark"]
+# drifter_slugs = ["drifters_lake_clark"]
+# drifter_slugs = ["drifters_uaf", "drifters_epscor"]
+# drifter_slugs = ["drifters_lake_clark"]
 # drifter_slugs = ["drifters_uaf"]
-# drifter_slugs = ["drifters_ecofoci", "drifters_uaf"]
+# drifter_slugs = ["drifters_uaf", "drifters_epscor", "drifters_lake_clark"]
+# drifter_slugs = ["drifters_epscor", "drifters_lake_clark"]
+# drifter_slugs = ["drifters_ecofoci", "drifters_uaf"]#, "drifters_epscor", "drifters_lake_clark"]
+
+slug_names = {"drifters_ecofoci": "EcoFOCI", "drifters_uaf": "UAF", 
+              "drifters_epscor": "EPSCoR", "drifters_lake_clark": "Lake Clark"}
 
 col_max = "#8e44ad"
 col_mean = "#63ad44"
@@ -94,8 +190,11 @@ for model in models:
     for drifter_slug in drifter_slugs:
         cat_name = f"~/projects/cook-inlet-catalogs/cook_inlet_catalogs/catalogs/{drifter_slug}.yaml"
         cat_drifters = intake.open_catalog(cat_name)
-        
-        for dataset_id in list(cat_drifters):
+        dataset_ids = list(cat_drifters)
+        # dataset_ids = [dataset_id for dataset_id in list(cat_drifters) if years[0] in dataset_id]
+        dataset_ids = dataset_ids[(icount)*dids:(icount+1)*dids]
+
+        for dataset_id in dataset_ids:
             print(f"\nChecking {dataset_id}\n")
             
             filename = dataset_id
@@ -128,10 +227,11 @@ for model in models:
             # What is the first time the drifter enters the domain box?
 
             # don't need tidal flats if drifter is deeper than tidal flats
-            if float(df.cf["Z"][0]) > 5:
-                use_static_masks = True
-            else:
-                use_static_masks = False
+            # if float(df.cf["Z"][0]) > 5:
+            #     use_static_masks = True
+            # else:
+            #     use_static_masks = False
+            use_static_masks = False
             
             print(f"Drifter depth is {float(df.cf['Z'][0])} m")
             # import pdb; pdb.set_trace()
@@ -154,6 +254,7 @@ for model in models:
             # run PTM simulation
             lon, lat = df.cf["longitude"].iloc[istart], df.cf["latitude"].iloc[istart]
             start_time = pd.Timestamp(df.cf["T"].iloc[istart]) - pd.Timedelta("40T")
+            end_time = pd.Timestamp(df.cf["T"].iloc[iend])
             print(lon, lat, start_time)
             # import pdb; pdb.set_trace()
             if os.path.exists(f"{basedir}/{filename}.nc"):
@@ -163,14 +264,21 @@ for model in models:
 
                 m = ptm.OpenDriftModel(ocean_model=model, z=-float(df.cf["Z"][0]),
                                     lon=lon, lat=lat, 
-                                    start_time=start_time, end_time=pd.Timestamp(df.cf["T"].iloc[iend]),
+                                    start_time=start_time, end_time=end_time,
                                     start_time_end=pd.Timestamp(df.cf["T"].iloc[istart]),
                                     #    start_time=df.cf["T"][0], end_time=df.cf["T"][0]+pd.Timedelta("2H"),#df.cf["T"].iloc[-1],
                                     # #    start_time_end=df.cf["T"][0]+pd.Timedelta("40T"),
                                     ocean_model_local=False, # for CIOFS3
                                     do3D=False,
                                     radius=500, number=1000, use_static_masks=use_static_masks,
-                                    output_file=f"{basedir}/{filename}.nc")
+                                    output_file=f"{basedir}/{filename}.nc",
+                                    max_speed=50,
+                                    coastline_action="previous",
+                                    seafloor_action="previous",
+                                    # log_level="DEBUG",
+                                    save_interpolator=True,
+                                    interpolator_filename="CIOFS3_interpolator",
+                                    )
                 m.run_all()
                 o = m.o
             
@@ -272,7 +380,27 @@ for model in models:
 
 
             if not os.path.exists(f"{basedir}/{filename}.png"):
-                ax, fig = o.plot(fast=True, land_color='#F0EFE4')
+                
+                # title including start time, end time, dataset_id, depth, and model
+                title = f"Drifter id: {dataset_id} ({slug_names[drifter_slug]}), run with {model}" \
+                        f"\n{start_time.strftime('%Y-%m-%d %H:%M')} to {end_time.strftime('%Y-%m-%d %H:%M')}, {float(df.cf['Z'][0])} m depth"
+                        # f"\n{start_time.isoformat()[:16]} to {end_time.isoformat()[:16]}, {float(df.cf['Z'][0])} m depth"
+
+
+                #     plt.title('%s\n%s to %s UTC (%i steps)' %
+                #               (self._figure_title(),
+                #                self.start_time.strftime('%Y-%m-%d %H:%M'),
+                #                self.time.strftime('%Y-%m-%d %H:%M'),
+                #                len(self.result.time)))
+                # else:
+                #     plt.title(
+                #         '%s\n%i elements seeded at %s UTC' %
+                #         (self._figure_title(), self.num_elements_scheduled(),
+                #          self.elements_scheduled_time[0].strftime(
+                #              '%Y-%m-%d %H:%M')))
+
+
+                ax, fig = o.plot(fast=True, land_color='#F0EFE4', title=title)
                 ax = add_drifter_track_to_plot(ax, df_interpolated, transform=ccrs.PlateCarree(globe=crs.globe), color='r', linewidth=2, marker="o", markersize=10, label="In situ drifter", zorder=20)
                 ax = add_feature_to_plot(ax, boundary_geom, ccrs.PlateCarree(globe=crs.globe), edgecolor='k', linestyle='--', facecolor='none')
                 ax.legend()

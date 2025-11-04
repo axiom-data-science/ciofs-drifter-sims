@@ -9,7 +9,7 @@ from pathlib import Path
 import intake
 import report_utils as ru
 
-models = ["CIOFS", "CIOFSFRESH"]
+models = ["CIOFS3"]
 
 imports = f"""\
 import intake
@@ -65,15 +65,15 @@ def write_nb(slug, not_in_jupyter_book):
                 continue
             print(f"Processing {dataset_id}")
 
-            text += f"""\
-### {model}
+#             text += f"""\
+# ### {model}
 
-"""
+# """
 
-            # link to animation
-            base = f"https://files.axds.co/ciofs_fresh/particle_animations/{model}"
-            link = f"{base}/{dataset_id}.mp4"
-            text += f"* [Animation]({link})\n\n"
+            # # link to animation
+            # base = f"https://files.axds.co/ciofs_fresh/particle_animations/{model}"
+            # link = f"{base}/{dataset_id}.mp4"
+            # text += f"* [Animation]({link})\n\n"
 
             path = f"{base_dir}/{dataset_id}.png"
             # path = f"{base_dir}/{dataset_id}.png"
@@ -112,7 +112,9 @@ if __name__ == "__main__":
     
     slugs = [
         "drifters_ecofoci",
-             "drifters_uaf"
+             "drifters_uaf",
+             "drifters_epscor",
+             "drifters_lake_clark"
              ]
     
     for slug in slugs:

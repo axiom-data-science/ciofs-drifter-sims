@@ -1,7 +1,7 @@
 (page:drifter_description)=
 # Overview of Drifter Simulations
 
-Particle simulations are run to match each available drifter dataset: `drifters_ecofoci` and `drifters_uaf`. 
+Particle simulations are run to match each available drifter dataset. 
 
 ## Simulation Setup
 
